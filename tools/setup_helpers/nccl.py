@@ -21,6 +21,7 @@ if USE_CUDA and not check_negative_env_flag('USE_SYSTEM_NCCL'):
     ENV_ROOT = os.getenv('NCCL_ROOT_DIR', None)
     LIB_DIR = os.getenv('NCCL_LIB_DIR', None)
     INCLUDE_DIR = os.getenv('NCCL_INCLUDE_DIR', None)
+    OPT_DIR = os.getenv('OPT', None)
 
     lib_paths = list(filter(bool, [
         LIB_DIR,
@@ -41,6 +42,7 @@ if USE_CUDA and not check_negative_env_flag('USE_SYSTEM_NCCL'):
         'LD_LIBRARY_PATH',
     ])))
     include_paths = list(filter(bool, [
+        os.path.join(OPT_DIR, 'include') if OPT_DIR is not None else None,
         INCLUDE_DIR,
         ENV_ROOT,
         os.path.join(ENV_ROOT, 'include') if ENV_ROOT is not None else None,

@@ -92,7 +92,7 @@ target_compile_options(c10d PUBLIC
 add_dependencies(c10d caffe2)
 
 if (USE_GLOO)
-  add_dependencies(c10d gloo)
+  # add_dependencies(c10d gloo)
   target_link_libraries(c10d PUBLIC gloo)
   if (USE_CUDA)
     target_link_libraries(c10d PUBLIC gloo_cuda)

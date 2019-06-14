@@ -135,8 +135,15 @@ IF(MPI_FOUND)
 ENDIF()
 
 # TODO we shouldn't need the USE_CUDA condition here. See https://github.com/pytorch/pytorch/issues/13101
-IF(USE_GLOO AND USE_CUDA)
-  ADD_DEPENDENCIES(THD gloo)
+IF(USE_GLOO)
+  # ADD_DEPENDENCIES(THD gloo)
+  TARGET_LINK_LIBRARIES(THD PUBLIC gloo)
+  IF(USE_CUDA)
+    # ADD_DEPENDENCIES(THD gloo_cuda)
+    TARGET_LINK_LIBRARIES(THD PUBLIC gloo_cuda)
+  ELSEIF(USE_ROCM)
+    ADD_DEPENDENCIES(THD gloo_hip)
+  ENDIF()
 ENDIF()
 
 IF(USE_NCCL)
